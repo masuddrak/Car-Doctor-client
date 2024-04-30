@@ -12,7 +12,7 @@ const Navber = () => {
         <li><NavLink to="/conatct">Contact</NavLink></li>
     </>
     return (
-        <div>
+        <div className="shadow-md">
             <div className="navbar bg-base-100 container mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -23,7 +23,7 @@ const Navber = () => {
                             {nav}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost w-28"><img className="object-contain" src={logo} alt="" /></a>
+                    <a className="w-14"><img className="object-contain" src={logo} alt="" /></a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
