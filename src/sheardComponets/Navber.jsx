@@ -2,8 +2,11 @@ import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.svg"
 import { MdSearch } from "react-icons/md";
 import { MdOutlineShoppingBag } from "react-icons/md";
+import { useContext } from "react";
+import { AuthContext } from "../Prvider/AuthProvider";
 
 const Navber = () => {
+    const { user,logOut ,setLoader} = useContext(AuthContext)
     const nav = < >
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/about">About</NavLink></li>
@@ -11,6 +14,11 @@ const Navber = () => {
         <li><NavLink to="/blogs">Blogs</NavLink></li>
         <li><NavLink to="/conatct">Contact</NavLink></li>
     </>
+    const handelLogOut=()=>{
+        logOut()
+        // setLoader(false)
+
+    }
     return (
         <div className="shadow-md">
             <div className="navbar bg-base-100 container mx-auto">
@@ -36,6 +44,22 @@ const Navber = () => {
                         <MdSearch></MdSearch>
                     </div>
                     <button className="outline outline-2 outline-red-500 px-3 py-1">Appintment</button>
+                    {
+                        user ? <div>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    </div>
+                                </div>
+                                <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                                    <li><a>Settings</a></li>
+                                    <li><button onClick={handelLogOut}>Logout</button></li>
+                                </ul>
+                            </div>
+                        </div> : <NavLink className="outline outline-2 outline-gray-500 px-3 py-1" to="/login">Login</NavLink>
+                    }
+
                 </div>
             </div>
         </div>
