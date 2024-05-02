@@ -23,7 +23,6 @@ const Navber = () => {
     const handleLogOut = () => {
         logOut()
             .then(() => { 
-                window.location.reload()
                 naviget("/login")
                 setLoader(false)
             })

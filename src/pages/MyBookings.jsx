@@ -7,7 +7,7 @@ const MyBookings = () => {
     const { user } = useContext(AuthContext)
     const [bookings, setBooking] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/checkout?email=${user?.email}`)
+        fetch(`http://localhost:5000/checkoutEmail?email=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setBooking(data)
@@ -19,11 +19,30 @@ const MyBookings = () => {
         })
             .then(res => res.json())
             .then(data => {
-                if(data.deletedCount){
-                    const updateBookItem=bookings.filter(booking=>booking._id !=id)
+                if (data.deletedCount) {
+                    const updateBookItem = bookings.filter(booking => booking._id != id)
                     setBooking(updateBookItem)
+                    
                 }
-               
+
+            })
+    }
+    const handelStaus = (id) => {
+        fetch(`http://localhost:5000/checkout/${id}`, {
+            method: "PATCH",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ status: "Confirem" })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if(data.modifiedCount){
+                    const remainingService=bookings.filter(booking=>booking._id !==id)
+                    const updateService=bookings.find(bookig=>bookig._id===id)
+                    updateService.status="Confirem"
+                    const newBookings=[updateService,...remainingService]
+                    setBooking(newBookings)
+                }
+
             })
     }
     return (
@@ -44,7 +63,7 @@ const MyBookings = () => {
                         <tbody>
                             {/* row 1 */}
                             {
-                                bookings.map(bookig => <CheckOutTable key={bookig._id} bookig={bookig} handelDeleteBookig={handelDeleteBookig}></CheckOutTable>)
+                                bookings.map(bookig => <CheckOutTable key={bookig._id} bookig={bookig} handelDeleteBookig={handelDeleteBookig} handelStaus={handelStaus}></CheckOutTable>)
                             }
 
                         </tbody>
