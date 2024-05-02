@@ -1,23 +1,36 @@
-import { NavLink } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg"
 import { MdSearch } from "react-icons/md";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { useContext } from "react";
 import { AuthContext } from "../Prvider/AuthProvider";
 
+
 const Navber = () => {
-    const { user,logOut ,setLoader} = useContext(AuthContext)
+    const { user, logOut,loader,setLoader } = useContext(AuthContext)
+    // console.log(user)
     const nav = < >
         <li><NavLink to="/">Home</NavLink></li>
         <li><NavLink to="/about">About</NavLink></li>
         <li><NavLink to="/services">Services</NavLink></li>
         <li><NavLink to="/blogs">Blogs</NavLink></li>
         <li><NavLink to="/conatct">Contact</NavLink></li>
+        {
+            user&&<li><NavLink to="/booking">My Bokking</NavLink></li>
+        }
     </>
-    const handelLogOut=()=>{
+    const naviget=useNavigate()
+    const handleLogOut = () => {
         logOut()
-        // setLoader(false)
-
+            .then(() => { 
+                window.location.reload()
+                naviget("/login")
+                setLoader(false)
+            })
+            .catch(error => console.log(error))
+    }
+    if(loader){
+        return <h1 className="text-4xl">loading........</h1>
     }
     return (
         <div className="shadow-md">
@@ -45,7 +58,7 @@ const Navber = () => {
                     </div>
                     <button className="outline outline-2 outline-red-500 px-3 py-1">Appintment</button>
                     {
-                        user ? <div>
+                        user?.email? <div>
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
@@ -54,12 +67,12 @@ const Navber = () => {
                                 </div>
                                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                                     <li><a>Settings</a></li>
-                                    <li><button onClick={handelLogOut}>Logout</button></li>
+                                    <li><button onClick={handleLogOut}>Logout</button></li>
                                 </ul>
                             </div>
                         </div> : <NavLink className="outline outline-2 outline-gray-500 px-3 py-1" to="/login">Login</NavLink>
                     }
-
+                   
                 </div>
             </div>
         </div>

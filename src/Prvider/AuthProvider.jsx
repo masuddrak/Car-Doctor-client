@@ -17,18 +17,20 @@ const AuthProvider = ({ children }) => {
 
     }
     const logOut=()=>{
+        setLoader(true)
         return signOut(auth)
     }
     useEffect(() => {
         const unSuscrib = onAuthStateChanged(auth, currenUser => {
+            console.log(currenUser)
             if(currenUser){
-                console.log(currenUser)
+               
                 setUser(currenUser)
                 setLoader(false)
             }
-               
+               setLoader(false)
              });
-            //  return ()=>unSuscrib()
+             return ()=>unSuscrib()
     }, [])
 
 

@@ -9,6 +9,8 @@ import Blogs from "../pages/Blogs";
 import About from "../pages/About";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Checkout from "../components/Checkout";
+import MyBookings from "../pages/MyBookings";
 
 const router = createBrowserRouter([
     {
@@ -36,12 +38,21 @@ const router = createBrowserRouter([
                 element:<Contact></Contact>
             },
             {
+                path:"/booking",
+                element:<MyBookings></MyBookings>
+            },
+            {
                 path:"/login",
                 element:<Login></Login>
             },
             {
                 path:"/register",
                 element:<Register></Register>
+            },
+            {
+                path:"/checkout/:id",
+                element:<Checkout></Checkout>,
+                loader:({params})=>fetch(`http://localhost:5000/checkout/${params.id}`)
             },
            
         ]

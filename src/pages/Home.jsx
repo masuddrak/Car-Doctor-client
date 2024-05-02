@@ -4,7 +4,7 @@ import About from "./About";
 
 const Home = () => {
     return (
-        <div className="">
+        <div className="conatiner mx-auto">
             <Banner></Banner>
             <About></About>
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import Service from "./Service";
 const HomeServices = () => {
     const [services, setServices] = useState([])
     useEffect(() => {
-        fetch("services.json")
+        fetch("http://localhost:5000/services")
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])
@@ -16,22 +16,7 @@ const HomeServices = () => {
             </div>
             <div className="grid grid-cols-3 gap-10">
                 {
-                    services.map(service => <div key={service._id} className="card  bg-base-100 shadow-xl">
-                        <figure className="px-10 pt-10">
-                            <img src={service.img} alt="Shoes" className="rounded-xl" />
-                        </figure>
-                        <div className="card-body ">
-                            <div className="flex justify-between items-end">
-                                <div>
-                                    <h2 className="card-title">{service.title}</h2>
-                                    <p className="text-red-500 font-semibold">Price:${service.price}</p>
-                                </div>
-                                <div >
-                                    <button className=" text-red-500"><FaArrowRight></FaArrowRight></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>)
+                    services.map(service =><Service key={service._id} service={service}></Service>)
                 }
             </div>
         </div>
