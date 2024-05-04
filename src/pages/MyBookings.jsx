@@ -1,17 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Prvider/AuthProvider";
 import CheckOutTable from "../components/CheckOutTable";
+import axios from "axios";
 
 
 const MyBookings = () => {
     const { user } = useContext(AuthContext)
+    console.log(user?.email)
     const [bookings, setBooking] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/checkoutEmail?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setBooking(data)
-            })
+        // fetch(`http://localhost:5000/checkoutEmail?email=${user?.email}`,{withCredentials:true})
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         setBooking(data)
+        //     })
+        axios.get(`http://localhost:5000/checkoutEmail?email=${user?.email}`,{withCredentials:true})
+        .then(res=>{
+            setBooking(res.data)
+        })
     }, [user])
     const handelDeleteBookig = (id) => {
         fetch(`http://localhost:5000/checkout/${id}`, {
@@ -65,7 +71,6 @@ const MyBookings = () => {
                             {
                                 bookings.map(bookig => <CheckOutTable key={bookig._id} bookig={bookig} handelDeleteBookig={handelDeleteBookig} handelStaus={handelStaus}></CheckOutTable>)
                             }
-
                         </tbody>
                     </table>
                 </div>

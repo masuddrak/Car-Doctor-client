@@ -1,13 +1,14 @@
-import {  NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg"
 import { MdSearch } from "react-icons/md";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { useContext } from "react";
 import { AuthContext } from "../Prvider/AuthProvider";
+import { IoPersonCircleSharp } from "react-icons/io5";
 
 
 const Navber = () => {
-    const { user, logOut,loader,setLoader } = useContext(AuthContext)
+    const { user, logOut, loader, setLoader } = useContext(AuthContext)
     // console.log(user)
     const nav = < >
         <li><NavLink to="/">Home</NavLink></li>
@@ -16,19 +17,19 @@ const Navber = () => {
         <li><NavLink to="/blogs">Blogs</NavLink></li>
         <li><NavLink to="/conatct">Contact</NavLink></li>
         {
-            user&&<li><NavLink to="/booking">My Bokking</NavLink></li>
+            user && <li><NavLink to="/booking">My Bokking</NavLink></li>
         }
     </>
-    const naviget=useNavigate()
+    const naviget = useNavigate()
     const handleLogOut = () => {
         logOut()
-            .then(() => { 
+            .then(() => {
                 naviget("/login")
                 setLoader(false)
             })
             .catch(error => console.log(error))
     }
-    if(loader){
+    if (loader) {
         return <h1 className="text-4xl">loading........</h1>
     }
     return (
@@ -57,11 +58,12 @@ const Navber = () => {
                     </div>
                     <button className="outline outline-2 outline-red-500 px-3 py-1">Appintment</button>
                     {
-                        user?.email? <div>
+                        user?.email ? <div>
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 rounded-full">
-                                        <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        {user?.photoURL
+                                            ? <img src={user?.photoURL}></img> : <IoPersonCircleSharp className="w-full h-full object-cover"></IoPersonCircleSharp>}
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
@@ -71,7 +73,7 @@ const Navber = () => {
                             </div>
                         </div> : <NavLink className="outline outline-2 outline-gray-500 px-3 py-1" to="/login">Login</NavLink>
                     }
-                   
+
                 </div>
             </div>
         </div>

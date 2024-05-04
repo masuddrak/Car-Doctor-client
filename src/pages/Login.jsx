@@ -2,24 +2,32 @@ import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../Prvider/AuthProvider";
+import axios from "axios";
 const Login = () => {
-    const {loginUser}=useContext(AuthContext)
-    const naviget=useNavigate()
-    const handelLogin=(e)=>{
+    const { loginUser,setLoader } = useContext(AuthContext)
+    const naviget = useNavigate()
+    const handelLogin = (e) => {
         e.preventDefault()
-        const from =e.target
-        const email=from.email.value
-        const password=from.password.value
-        loginUser(email,password)
-        .then(result=>{
-            console.log(result.user)
-            // setLoader(false)
-            naviget("/")
-        })
-        .catch(error=>{
-            console.log(error.message)
-        })
-        console.log(email,password)
+        const from = e.target
+        const email = from.email.value
+        const password = from.password.value
+        loginUser(email, password)
+            .then(result => {
+                console.log(result.user)
+                // setLoader(false)
+                // naviget("/")
+                const user={email}
+                axios.post('http://localhost:5000/createtoken',user,{withCredentials:true} )
+                    .then(function (response) {
+                        console.log(response.data);
+                    })
+                    setLoader(false)
+            })
+            .catch(error => {
+                console.log(error.message)
+                setLoader(false)
+            })
+        console.log(email, password)
     }
     return (
         <div>
@@ -34,12 +42,12 @@ const Login = () => {
                             <h1 className="text-2xl font-bold text-center">Login</h1>
                             <form onSubmit={handelLogin} noValidate="" action="" className="space-y-6">
                                 <div className="space-y-1 text-sm">
-                                    <label  className="block dark:text-gray-600">Email</label>
-                                    <input type="email" name="email"  placeholder="Email" className="w-full px-4 py-3 rounded-md border outline-0" />
+                                    <label className="block dark:text-gray-600">Email</label>
+                                    <input type="email" name="email" placeholder="Email" className="w-full px-4 py-3 rounded-md border outline-0" />
                                 </div>
                                 <div className="space-y-1 text-sm">
-                                    <label  className="block dark:text-gray-600">Password</label>
-                                    <input type="password" name="password"  placeholder="Password" className="w-full px-4 py-3 rounded-md border outline-0" />
+                                    <label className="block dark:text-gray-600">Password</label>
+                                    <input type="password" name="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border outline-0" />
                                 </div>
                                 <button className="block w-full p-3 text-center rounded-sm bg-red-500 text-white">Sign in</button>
                             </form>
