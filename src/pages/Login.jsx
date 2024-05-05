@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/images/login/login.svg"
 import { useContext } from "react";
 import { AuthContext } from "../Prvider/AuthProvider";
-import axios from "axios";
 const Login = () => {
     const { loginUser,setLoader } = useContext(AuthContext)
     const naviget = useNavigate()
@@ -16,12 +15,6 @@ const Login = () => {
                 console.log(result.user)
                 // setLoader(false)
                 // naviget("/")
-                const user={email}
-                axios.post('http://localhost:5000/createtoken',user,{withCredentials:true} )
-                    .then(function (response) {
-                        console.log(response.data);
-                    })
-                    setLoader(false)
             })
             .catch(error => {
                 console.log(error.message)
