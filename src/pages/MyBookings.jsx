@@ -14,7 +14,7 @@ const MyBookings = () => {
         //     .then(data => {
         //         setBooking(data)
         //     })
-        axios.get(`http://localhost:5000/checkoutEmail?email=${user?.email}`)
+        axios.get(`http://localhost:5000/checkoutEmail?email=${user?.email}`,{withCredentials:true})
         .then(res=>{
             setBooking(res.data)
         })

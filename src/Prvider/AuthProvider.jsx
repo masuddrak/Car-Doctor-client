@@ -24,11 +24,13 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unSuscrib = onAuthStateChanged(auth, currenUser => {
             console.log(currenUser)
+
+
+            setUser(currenUser)
+            setLoader(false)
             const tokenUser = currenUser?.user || user?.email
+            const userEmail = { email: tokenUser }
             if (currenUser) {
-                setUser(currenUser)
-                setLoader(false)
-                const userEmail = { email: tokenUser }
                 axios.post("http://localhost:5000/jwt", userEmail, { withCredentials: true })
                     .then(res => {
                         console.log(res.data)
@@ -36,22 +38,21 @@ const AuthProvider = ({ children }) => {
                     .catch(error => {
                         console.log(error)
                     })
+
             }
             else {
-                const logoutUser = { email: tokenUser }
-                axios.post("http://localhost:5000/logout", logoutUser, { withCredentials: true })
+                axios.post("http://localhost:5000/logout", userEmail, { withCredentials: true })
                     .then(res => {
                         console.log(res.data)
                     })
                     .catch(error => {
                         console.log(error)
                     })
-                setUser(null)
             }
-            setLoader(false)
+
         });
         return () => unSuscrib()
-    }, [])
+    }, [user])
 
 
 
