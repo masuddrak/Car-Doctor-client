@@ -1,12 +1,7 @@
-import { useEffect, useState } from "react";
 import Service from "./Service";
+import useServices from "../hooks/useServices";
 const HomeServices = () => {
-    const [services, setServices] = useState([])
-    useEffect(() => {
-        fetch("http://localhost:5000/services")
-            .then(res => res.json())
-            .then(data => setServices(data))
-    }, [])
+    const services=useServices()
     return (
         <div className="container mx-auto mt-24 mb-10">
             <div className="text-center">

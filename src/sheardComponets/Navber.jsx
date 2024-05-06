@@ -2,13 +2,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.svg"
 import { MdSearch } from "react-icons/md";
 import { MdOutlineShoppingBag } from "react-icons/md";
-import { useContext } from "react";
-import { AuthContext } from "../Prvider/AuthProvider";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import useAuth from "../hooks/useAuth";
 
 
 const Navber = () => {
-    const { user, logOut, loader, setLoader } = useContext(AuthContext)
+    const { user, logOut, loader, setLoader } = useAuth()
     // console.log(user)
     const nav = < >
         <li><NavLink to="/">Home</NavLink></li>

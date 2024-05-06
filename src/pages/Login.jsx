@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/images/login/login.svg"
-import { useContext } from "react";
-import { AuthContext } from "../Prvider/AuthProvider";
+
+import useAuth from "../hooks/useAuth";
 const Login = () => {
-    const { loginUser,setLoader } = useContext(AuthContext)
+    const { loginUser,setLoader } = useAuth()
     const naviget = useNavigate()
     const handelLogin = (e) => {
         e.preventDefault()

@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Prvider/AuthProvider";
+import { useEffect, useState } from "react";
 import CheckOutTable from "../components/CheckOutTable";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 
 const MyBookings = () => {
-    const { user } = useContext(AuthContext)
+    const { user } = useAuth()
     console.log(user?.email)
     const [bookings, setBooking] = useState([])
     useEffect(() => {

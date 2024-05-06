@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
-import { AuthContext } from "../Prvider/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 
 const Checkout = () => {
-    const { user, loader } = useContext(AuthContext)
+    const { user, loader } = useAuth()
 
     const loaderData = useLoaderData()
     console.log(loaderData)

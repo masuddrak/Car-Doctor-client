@@ -22,12 +22,13 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
     useEffect(() => {
+        setLoader(true)
         const unSuscrib = onAuthStateChanged(auth, currenUser => {
             console.log(currenUser)
 
 
             setUser(currenUser)
-            setLoader(false)
+            
             const tokenUser = currenUser?.user || user?.email
             const userEmail = { email: tokenUser }
             if (currenUser) {
@@ -49,6 +50,7 @@ const AuthProvider = ({ children }) => {
                         console.log(error)
                     })
             }
+            setLoader(false)
 
         });
         return () => unSuscrib()
