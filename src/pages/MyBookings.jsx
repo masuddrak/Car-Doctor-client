@@ -1,24 +1,20 @@
 import { useEffect, useState } from "react";
 import CheckOutTable from "../components/CheckOutTable";
-import axios from "axios";
 import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const MyBookings = () => {
     const { user } = useAuth()
+    const axiosSecure=useAxiosSecure()
     console.log(user?.email)
     const [bookings, setBooking] = useState([])
     useEffect(() => {
-        // fetch(`http://localhost:5000/checkoutEmail?email=${user?.email}`,{withCredentials:true})
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         setBooking(data)
-        //     })
-        axios.get(`http://localhost:5000/checkoutEmail?email=${user?.email}`,{withCredentials:true})
+        axiosSecure.get(`/checkoutEmail?email=${user?.email}`)
         .then(res=>{
             setBooking(res.data)
         })
-    }, [user])
+    }, [user,axiosSecure])
     const handelDeleteBookig = (id) => {
         fetch(`http://localhost:5000/checkout/${id}`, {
             method: "DELETE"
